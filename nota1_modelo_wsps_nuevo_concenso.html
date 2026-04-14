@@ -515,3 +515,520 @@ document.addEventListener("DOMContentLoaded", function() {
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instituciones de Oferta, Políticas y Desempeño</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {
+    delimiters:[
+      {left:'$$',right:'$$',display:true},
+      {left:'$',right:'$',display:false}
+    ]
+  });"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&family=Inconsolata:wght@400;500&display=swap');
+
+:root {
+  --ink:        #111009;
+  --ink-2:      #3c3a32;
+  --ink-3:      #8a8678;
+  --paper:      #fdfbf6;
+  --paper-2:    #f4f1e8;
+  --paper-3:    #eae6d8;
+  --rule:       #d6d0be;
+  --rust:       #8a3a1a;
+  --rust-l:     #f8ece6;
+  --slate:      #2a4a6a;
+  --slate-l:    #e6ecf4;
+  --sage:       #2a5a3a;
+  --sage-l:     #e6f2ea;
+  --gold:       #7a5a00;
+  --gold-l:     #faf3dc;
+  --plum:       #4a2060;
+  --plum-l:     #f0eaf8;
+  --serif: 'EB Garamond', Georgia, serif;
+  --sans:  'Jost', sans-serif;
+  --mono:  'Inconsolata', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.88;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 3.5rem 2rem 7rem;
+}
+
+header { margin-bottom: 3.5rem; }
+.header-band {
+  display: flex; justify-content: space-between; align-items: baseline;
+  border-top: 3px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding: 0.5rem 0;
+  margin-bottom: 1.4rem;
+}
+.doc-id {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3);
+}
+h1 {
+  font-family: var(--serif); font-size: 2.25rem;
+  font-weight: 700; line-height: 1.1; color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+h1 em { font-style: italic; font-weight: 400; color: var(--rust); }
+
+.epigraph {
+  background: var(--paper-2);
+  border-left: 4px solid var(--slate);
+  padding: 1.5rem;
+  border-radius: 0 8px 8px 0;
+  font-family: var(--sans);
+  font-size: 16px;
+  color: var(--ink-2);
+  line-height: 1.6;
+  margin: 1.5rem 0;
+}
+.epigraph strong { color: var(--slate); text-transform: uppercase; font-size: 14px; letter-spacing: 0.05em; display: block; margin-bottom: 0.5rem; font-family: var(--mono); font-weight: 700;}
+
+h2 {
+  font-family: var(--serif); font-size: 1.32rem; font-weight: 700;
+  color: var(--ink); margin: 3rem 0 0.9rem;
+  padding-bottom: 0.35rem; border-bottom: 1px solid var(--rule);
+}
+h3 {
+  font-family: var(--sans); font-size: 0.78rem; font-weight: 500;
+  color: var(--ink-3); margin: 2rem 0 0.55rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+}
+p { margin-bottom: 1rem; }
+
+.pullquote {
+  font-family: var(--serif); font-style: italic;
+  font-size: 1.18rem; line-height: 1.6;
+  color: var(--rust); border-left: 3px solid var(--rust);
+  padding: 0.6rem 1.2rem; margin: 2rem 0;
+}
+
+.math-block {
+  background: var(--paper-2); border-left: 3px solid var(--slate);
+  border-radius: 0 6px 6px 0; padding: 0.9rem 1.2rem;
+  margin: 1.2rem 0; overflow-x: auto; text-align: center;
+  font-size: 22px;
+}
+.math-block.rust  { border-left-color: var(--rust); }
+.math-block.sage  { border-left-color: var(--sage); }
+.math-block.gold  { border-left-color: var(--gold); }
+
+.formula-desc {
+  font-family: var(--sans); font-size: 15px; color: var(--ink-2);
+  margin-top: -0.5rem; margin-bottom: 1.5rem; padding-left: 1.5rem;
+  background: var(--paper-3); padding: 1rem 1.5rem; border-radius: 6px;
+}
+.formula-desc strong.c-tag { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--slate); display: block; margin-bottom: 10px; }
+.formula-desc ul { margin: 0; padding-left: 20px; }
+.formula-desc li { margin-bottom: 5px; }
+
+.callout {
+  border-radius: 8px; padding: 1rem 1.5rem;
+  font-family: var(--sans); font-size: 15px;
+  margin: 1.5rem 0; line-height: 1.65;
+}
+.callout .c-tag {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  display: block; margin-bottom: 0.6rem; font-weight: 700;
+}
+.callout.note    { background: var(--slate-l); border: 1px solid #a8bcd4; color: #0a1e34; }
+.callout.warn    { background: var(--gold-l);  border: 1px solid #cca840; color: #2a1e00; }
+.callout.insight { background: var(--plum-l);  border: 1px solid #c0a0d8; color: #200840; }
+.callout.result  { background: var(--sage-l);  border: 1px solid #90c0a0; color: #0a2014; }
+.callout.caution { background: var(--rust-l);  border: 1px solid #d4a090; color: #3a1008; }
+
+/* ── SIMULATOR ── */
+.sim-panel {
+  background: var(--paper-2); border: 1px solid var(--rule);
+  border-radius: 12px; padding: 1.75rem; margin: 2rem 0;
+}
+.panel-label {
+  font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--ink); margin-bottom: 1.4rem;
+  border-bottom: 1px solid var(--rule); padding-bottom: 0.5rem;
+}
+.sim-explanation {
+  font-family: var(--sans); font-size: 14.5px; color: var(--ink-2);
+  margin-bottom: 1.5rem; line-height: 1.6;
+}
+.sim-explanation strong { color: var(--ink); }
+
+.controls { display: flex; flex-direction: column; gap: 0.9rem; margin-bottom: 1.4rem; }
+.ctrl-row { display: flex; align-items: center; gap: 12px; background: white; padding: 10px 15px; border-radius: 6px; border: 1px solid var(--rule); }
+.ctrl-row label { font-family: var(--sans); font-size: 14px; font-weight: 500; color: var(--ink-2); min-width: 220px; }
+.ctrl-row input[type=range] { flex: 1; cursor: pointer; }
+.ctrl-val { font-family: var(--mono); font-size: 14px; font-weight: 600; min-width: 52px; text-align: right; }
+
+.chart-wrap { position: relative; width: 100%; height: 350px; background: white; border-radius: 8px; padding: 10px; border: 1px solid var(--rule); }
+
+footer {
+  margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--rule);
+  font-family: var(--sans); font-size: 13.5px; color: var(--ink-3); line-height: 1.6;
+}
+footer em { font-style: italic; }
+
+@media(max-width:600px){
+  body { padding: 1.5rem 1rem 4rem; font-size: 16px; }
+  h1 { font-size: 1.8rem; }
+  .ctrl-row { flex-direction: column; align-items: flex-start; }
+  .ctrl-row input[type=range] { width: 100%; }
+  .ctrl-val { align-self: flex-end; }
+  .ctrl-row label { min-width: 140px; font-size: 13px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-band">
+    <span class="doc-id">Nota 1 · Nuevo Consenso</span>
+    <span class="doc-id">Macroeconomía II</span>
+  </div>
+  <h1>Instituciones del Lado de la Oferta, <em>Políticas y Desempeño</em></h1>
+  <div class="epigraph">
+    <strong>Note Objective</strong>
+    Esta nota interactiva explora la microfundamentación de las rigideces del mercado laboral. Abandonaremos el supuesto clásico del vaciamiento de mercados para entender por qué el <strong>desempleo involuntario</strong> es una característica permanente en equilibrio, analizando el modelo de Fijación de Salarios y Precios (WS-PS).
+  </div>
+</header>
+
+
+<h2>1. De la visión Clásica a la Competencia Imperfecta</h2>
+
+<p>
+  El modelo clásico no lograba explicar ciertos fenómenos macroeconómicos observados, particularmente la persistencia del desempleo sin caídas salariales abruptas. Bajo el enfoque del "Nuevo Consenso", la economía se analiza a través del lente de la competencia imperfecta, donde las empresas fijan precios (Price Setters) y salarios (Wage Setters).
+</p>
+
+<div class="pullquote">
+  En el equilibrio macroeconómico moderno, el mercado laboral nunca se vacía. El desempleo actúa como un dispositivo disciplinario necesario para los empleadores, forzando el esfuerzo de los trabajadores.
+</div>
+
+
+<h2>2. Microfundamentación de la Curva WS</h2>
+
+<p>
+  La curva de Fijación de Salarios (WS - <em>Wage Setting</em>) se basa en que los contratos laborales son inherentemente <strong>incompletos</strong>. El empleador compra el tiempo del trabajador, pero necesita su esfuerzo. Como el esfuerzo es costoso de monitorear, surge un problema de incentivos.
+</p>
+
+<h3>El Problema del Reclutamiento</h3>
+
+<p>
+  Para que un trabajador acepte un empleo, la oferta salarial debe superar su salario de reserva. Este depende del seguro de desempleo y del tiempo que espera pasar buscando otro trabajo.
+</p>
+
+<div class="math-block">
+  $$ w_r = \tau(b + \alpha^M) + (1-\tau)v $$
+</div>
+
+<div class="formula-desc">
+  <strong class="c-tag">Variable Definition</strong>
+  <ul>
+    <li><strong>$w_r$</strong> : Salario de reserva (el mínimo exigido para aceptar la oferta).</li>
+    <li><strong>$\tau$</strong> : Proporción de tiempo que espera estar desempleado.</li>
+    <li><strong>$b$</strong> : Beneficios o seguro de desempleo provisto por el Estado.</li>
+    <li><strong>$\alpha^M$</strong> : Utilidad monetaria marginal de estar desempleado (ocio valorizado).</li>
+    <li><strong>$v$</strong> : Utilidad neta de conseguir empleo ($w - c$).</li>
+  </ul>
+</div>
+
+<h3>El Problema de la Motivación (No-Elusión)</h3>
+
+<p>
+  Una vez contratado, el trabajador podría eludir responsabilidades (<em>shirking</em>). Para evitarlo, la empresa debe pagar un salario estrictamente mayor al de reserva, creando una "renta del empleo". Si el trabajador es despedido por holgazanear, perder esta renta representa un costo real.
+</p>
+
+<div class="math-block rust">
+  $$ w = w_r + c + \left(\frac{s}{h-s}\right)c $$
+</div>
+
+<div class="formula-desc">
+  <strong class="c-tag">Variable Definition</strong>
+  <ul>
+    <li><strong>$w$</strong> : Salario de no-elusión (el salario efectivo pagado).</li>
+    <li><strong>$c$</strong> : Costo marginal del esfuerzo incurrido por el trabajador.</li>
+    <li><strong>$s$</strong> : Tiempo esperado antes de ser descubierto holgazaneando.</li>
+    <li><strong>$h$</strong> : Horizonte temporal total del trabajador.</li>
+    <li><strong>$\frac{s}{h-s}c$</strong> : La "renta" adicional pagada como prima para disuadir la elusión.</li>
+  </ul>
+</div>
+
+<div class="callout result">
+  <span class="c-tag">Theoretical Conclusion</span>
+  Como el salario pagado $w$ siempre es estrictamente mayor a $w_r$, existirá gente dispuesta a trabajar por el salario vigente que no encuentra empleo. Este es el origen del desempleo involuntario estructural.
+</div>
+
+<!-- SIMULADOR 1 -->
+<div class="sim-panel">
+  <div class="panel-label">Simulator 1: Construcción de la Curva WS</div>
+  
+  <div class="sim-explanation">
+    <strong>¿Qué muestra este gráfico?</strong> Ilustra cómo la empresa construye su oferta salarial. La línea inferior es el Salario de Reserva ($w_r$). La línea superior es el Salario de No-Elusión (Curva WS). La distancia entre ambas es la renta del empleo. <br><br>
+    <strong>Interacción:</strong> 
+    <ul style="margin-top: 5px; margin-bottom: 0; padding-left: 20px;">
+      <li>Aumenta el <strong>Seguro de Desempleo</strong> para ver cómo se desplaza toda la estructura salarial hacia arriba (los trabajadores exigen más).</li>
+      <li>Aumenta el <strong>Costo de Esfuerzo</strong> para ver cómo la prima requerida (la brecha entre las curvas) se hace más grande y empina la curva al acercarse al pleno empleo.</li>
+    </ul>
+  </div>
+  
+  <div class="controls">
+    <div class="ctrl-row">
+      <label>Seguro de Desempleo ($b$)</label>
+      <input type="range" id="sim1-b" min="0" max="30" value="10" style="accent-color: var(--slate);">
+      <span class="ctrl-val" id="val-b" style="color: var(--slate);">10</span>
+    </div>
+    <div class="ctrl-row">
+      <label>Costo de Esfuerzo ($c$)</label>
+      <input type="range" id="sim1-c" min="2" max="15" value="5" style="accent-color: var(--rust);">
+      <span class="ctrl-val" id="val-c" style="color: var(--rust);">5</span>
+    </div>
+  </div>
+  
+  <div class="chart-wrap"><canvas id="chart-sim1"></canvas></div>
+</div>
+
+
+<h2>3. Monopsonio y Salarios Mínimos</h2>
+
+<p>
+  Al enfrentar una curva WS con pendiente positiva, la empresa tiene <strong>poder de monopsonio</strong>. Sabe que para contratar a un trabajador adicional, debe subirle el salario a *todos* los empleados existentes. Por ello, el Costo Marginal del Trabajo (CMg) crece más rápido que el salario promedio.
+</p>
+
+<!-- SIMULADOR 2 -->
+<div class="sim-panel">
+  <div class="panel-label">Simulator 2: Salario Mínimo bajo Monopsonio</div>
+  
+  <div class="sim-explanation">
+    <strong>¿Qué muestra este gráfico?</strong> En un mercado monopsonista, la empresa no iguala la oferta laboral a la demanda (VPMg), sino que maximiza beneficios donde su <strong>Costo Marginal (CMg) = VPMg</strong> (Punto de equilibrio inicial: N=40, pagando un salario de 30). Contrata menos gente para mantener salarios bajos. <br><br>
+    <strong>Interacción:</strong> Mueve el deslizador para imponer un <strong>Salario Mínimo</strong>. Observa cómo la curva de Costo Marginal (punteada roja) se vuelve horizontal en ese nivel. Si fijas el salario mínimo en 40, a la empresa le costará lo mismo el primer trabajador que el número 60, ¡incentivándola a contratar más gente (hasta N=60)!
+  </div>
+  
+  <div class="controls">
+    <div class="ctrl-row">
+      <label>Nivel de Salario Mínimo</label>
+      <input type="range" id="sim2-wmin" min="10" max="60" value="10" step="5" style="accent-color: var(--slate);">
+      <span class="ctrl-val" id="val-wmin" style="color: var(--rust); min-width: 180px;">Libre Mercado (Sin mínimo)</span>
+    </div>
+  </div>
+  
+  <div class="chart-wrap"><canvas id="chart-sim2"></canvas></div>
+</div>
+
+<div class="callout warn">
+  <span class="c-tag">Key Clarification</span>
+  Este resultado rompe con la teoría clásica. En un monopsonio, un salario mínimo moderado (que no supere el punto de competencia perfecta) <strong>no destruye empleo, sino que lo incrementa</strong>, al eliminar el incentivo de la empresa para restringir vacantes.
+</div>
+
+
+<h2>4. Histéresis y el Efecto Cicatriz (Scarring)</h2>
+
+<p>
+  ¿Puede un shock recesivo temporal tener efectos permanentes? El concepto de histéresis demuestra que sí. En recesiones largas, una parte de los desempleados se convierten en <strong>Desempleados de Larga Duración (LTU)</strong>.
+</p>
+<p>
+  Los LTU sufren pérdida de habilidades y estigmatización por parte de los empleadores. Como resultado, dejan de competir efectivamente por los puestos de trabajo. Al disminuir este "ejército de reserva", los trabajadores empleados (<em>insiders</em>) pueden presionar por salarios más altos sin miedo a ser reemplazados.
+</p>
+
+<!-- SIMULADOR 3 -->
+<div class="sim-panel">
+  <div class="panel-label">Simulator 3: Histéresis y Desplazamiento</div>
+  
+  <div class="sim-explanation">
+    <strong>¿Qué muestra este gráfico?</strong> El equilibrio macroestructural se da donde la curva de Fijación de Salarios (WS) cruza a la de Fijación de Precios (PS, dictada por la productividad y el markup de las empresas). <br><br>
+    <strong>Interacción:</strong> Aumenta la proporción de <strong>Desempleados de Larga Duración (LTU)</strong>. Al haber menos competencia real por los puestos, los trabajadores exigen un salario real mayor para cualquier nivel de empleo, desplazando la curva WS hacia arriba. El nuevo punto de cruce con la PS resultará en un nivel de empleo permanentemente menor.
+  </div>
+  
+  <div class="controls">
+    <div class="ctrl-row">
+      <label>Desempleados Larga Duración (LTU)</label>
+      <input type="range" id="sim3-ltu" min="0" max="40" value="0" style="accent-color: var(--slate);">
+      <span class="ctrl-val" id="val-ltu" style="color: var(--rust);">0%</span>
+    </div>
+  </div>
+  
+  <div class="chart-wrap"><canvas id="chart-sim3"></canvas></div>
+</div>
+
+
+<footer>
+  Notas elaboradas por Caleb Tejero para el curso de Macroeconomía II, en la Facultad de Ciencias Económicas de Universidad de Buenos Aires (2026).<br><br>
+  <strong>Bibliografía requerida:</strong><br>
+  Carlin, W., & Soskice, D. (2015). <em>Macroeconomics: Institutions, Instability, and the Financial System.</em> Oxford University Press. (Capítulo 15).
+</footer>
+
+<script>
+// Inicializar KaTeX
+document.addEventListener("DOMContentLoaded", function() {
+    renderMathInElement(document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "$", right: "$", display: false}
+        ],
+        ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code"],
+        throwOnError: false
+    });
+
+    const commonOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 300 },
+        plugins: {
+            legend: { labels: { font: { family: "'Jost', sans-serif", size: 13 }, color: '#3c3a32' } }
+        },
+        scales: {
+            x: { 
+                title: { display: true, text: 'Nivel de Empleo (N)', font: {family: "'Jost', sans-serif", size: 13} },
+                grid: { color: '#eae6d8' },
+                ticks: { font: { family: "'Inconsolata', monospace", size: 12 }, color: '#8a8678' }
+            },
+            y: { 
+                title: { display: true, text: 'Nivel Salarial / Costo', font: {family: "'Jost', sans-serif", size: 13} },
+                grid: { color: '#eae6d8' },
+                ticks: { font: { family: "'Inconsolata', monospace", size: 12 }, color: '#8a8678' }
+            }
+        }
+    };
+
+    // --- SIMULADOR 1 ---
+    const ctx1 = document.getElementById('chart-sim1').getContext('2d');
+    const chart1 = new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: [10, 20, 30, 40, 50, 60, 70, 80, 90, 95],
+            datasets: [
+                { label: 'Salario Reserva (wr)', borderColor: '#8a8678', backgroundColor: 'transparent', borderWidth: 2.5, tension: 0.3, pointRadius: 0 },
+                { label: 'Salario No-Elusión (WS)', borderColor: '#2a4a6a', backgroundColor: 'transparent', borderWidth: 3, tension: 0.3, pointRadius: 0 }
+            ]
+        },
+        options: Object.assign({}, commonOptions, {
+            scales: { 
+                x: commonOptions.scales.x, 
+                y: { min: 0, max: 70, title: { display: true, text: 'Salario (w)' }, grid: { color: '#eae6d8' } } 
+            }
+        })
+    });
+
+    function updateSim1() {
+        const b = parseFloat(document.getElementById('sim1-b').value);
+        const c = parseFloat(document.getElementById('sim1-c').value);
+        document.getElementById('val-b').innerText = b;
+        document.getElementById('val-c').innerText = c;
+
+        const wrData = chart1.data.labels.map(N => b + (N * 0.15));
+        const wsData = chart1.data.labels.map((N, index) => {
+            const rent = c + (c * (N / (100 - N))); 
+            return wrData[index] + rent;
+        });
+
+        chart1.data.datasets[0].data = wrData;
+        chart1.data.datasets[1].data = wsData;
+        chart1.update();
+    }
+    document.getElementById('sim1-b').addEventListener('input', updateSim1);
+    document.getElementById('sim1-c').addEventListener('input', updateSim1);
+    updateSim1();
+
+
+    // --- SIMULADOR 2 ---
+    const ctx2 = document.getElementById('chart-sim2').getContext('2d');
+    const chart2 = new Chart(ctx2, {
+        type: 'line',
+        data: {
+            labels: [0, 10, 20, 30, 40, 50, 60, 70, 80],
+            datasets: [
+                { label: 'Demanda Laboral (VPMg)', data: [70, 65, 60, 55, 50, 45, 40, 35, 30], borderColor: '#2a5a3a', borderWidth: 2.5, tension: 0, pointRadius: 0 },
+                { label: 'Oferta Laboral (Curva WS)', data: [10, 15, 20, 25, 30, 35, 40, 45, 50], borderColor: '#8a8678', borderWidth: 2.5, tension: 0, pointRadius: 0 },
+                { label: 'Costo Marginal Laboral (CMg)', data: [10, 20, 30, 40, 50, 60, 70, 80, 90], borderColor: '#8a3a1a', borderDash: [5, 5], borderWidth: 3, tension: 0, pointRadius: 0 },
+                { label: 'Salario Mínimo', data: [], borderColor: '#4a2060', borderWidth: 2.5, tension: 0, pointRadius: 0 }
+            ]
+        },
+        options: Object.assign({}, commonOptions, {
+            scales: { 
+                x: commonOptions.scales.x,
+                y: { min: 0, max: 90, title: { display: true, text: 'Salarios y Costos' }, grid: { color: '#eae6d8' } } 
+            }
+        })
+    });
+
+    function updateSim2() {
+        const wmin = parseFloat(document.getElementById('sim2-wmin').value);
+        const displayLabel = wmin === 10 ? "Libre Mercado (Sin mínimo)" : "w = " + wmin;
+        document.getElementById('val-wmin').innerText = displayLabel;
+
+        const baseWS = [10, 15, 20, 25, 30, 35, 40, 45, 50]; 
+        
+        if (wmin <= 10) {
+            chart2.data.datasets[2].data = [10, 20, 30, 40, 50, 60, 70, 80, 90]; 
+            chart2.data.datasets[3].data = []; 
+        } else {
+            chart2.data.datasets[3].data = Array(9).fill(wmin); 
+            
+            const newCMg = chart2.data.labels.map((N, i) => {
+                const ws_at_N = baseWS[i];
+                if (wmin > ws_at_N) return wmin; 
+                return 10 + (N * 1); 
+            });
+            chart2.data.datasets[2].data = newCMg;
+        }
+        chart2.update();
+    }
+    document.getElementById('sim2-wmin').addEventListener('input', updateSim2);
+    updateSim2();
+
+
+    // --- SIMULADOR 3 ---
+    const ctx3 = document.getElementById('chart-sim3').getContext('2d');
+    const chart3 = new Chart(ctx3, {
+        type: 'line',
+        data: {
+            labels: [50, 60, 70, 80, 90, 100],
+            datasets: [
+                { label: 'Fijación de Precios (PS)', data: [40, 40, 40, 40, 40, 40], borderColor: '#2a5a3a', borderWidth: 3, tension: 0, pointRadius: 0 },
+                { label: 'Fijación de Salarios (WS)', data: [15, 20, 27, 40, 65, 120], borderColor: '#2a4a6a', borderWidth: 3, tension: 0.4, pointRadius: 0 }
+            ]
+        },
+        options: Object.assign({}, commonOptions, {
+            scales: { 
+                x: commonOptions.scales.x,
+                y: { min: 10, max: 80, title: { display: true, text: 'Salario Real (w/p)' }, grid: { color: '#eae6d8' } } 
+            }
+        })
+    });
+
+    function updateSim3() {
+        const ltu = parseFloat(document.getElementById('sim3-ltu').value);
+        document.getElementById('val-ltu').innerText = ltu + "%";
+
+        const baseWS = [15, 20, 27, 40, 65, 120];
+        
+        const shiftFactor = ltu * 0.7; 
+        const newWS = baseWS.map(val => val + shiftFactor);
+
+        chart3.data.datasets[1].data = newWS;
+        chart3.update();
+    }
+    document.getElementById('sim3-ltu').addEventListener('input', updateSim3);
+    updateSim3();
+
+});
+</script>
+
+</body>
+</html>
