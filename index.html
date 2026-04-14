@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notas de Macroeconomía II</title>
+    <style>
+        /* Estilos alineados con la estética de tus notas */
+        @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Jost:wght@300;400;500&display=swap');
+        
+        :root {
+            --ink: #111009;
+            --paper: #fdfbf6;
+            --paper-2: #f4f1e8;
+            --rust: #8a3a1a;
+            --slate: #2a4a6a;
+            --rule: #d6d0be;
+        }
+
+        body {
+            background: var(--paper);
+            color: var(--ink);
+            font-family: 'EB Garamond', serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            line-height: 1.6;
+        }
+
+        header {
+            border-bottom: 3px solid var(--ink);
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-family: 'Jost', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--slate);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        h1 {
+            font-size: 2.6rem;
+            margin: 0.5rem 0 0;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .intro {
+            font-family: 'Jost', sans-serif;
+            font-size: 1.05rem;
+            color: var(--ink);
+            margin-bottom: 3rem;
+        }
+
+        .note-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .note-item {
+            background: var(--paper-2);
+            margin-bottom: 1.2rem;
+            padding: 0;
+            border-radius: 8px;
+            border-left: 5px solid var(--rust);
+            transition: all 0.3s ease;
+            border: 1px solid var(--rule);
+            border-left: 5px solid var(--rust);
+        }
+
+        .note-item:hover {
+            transform: translateX(8px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .note-link {
+            text-decoration: none;
+            color: var(--ink);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        .note-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .note-tag {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.8rem;
+            background: var(--rust);
+            color: white;
+            padding: 2px 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        footer {
+            margin-top: 6rem;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.85rem;
+            color: var(--slate);
+            border-top: 1px solid var(--rule);
+            padding-top: 1.5rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="subtitle">Recursos para Alumnos</div>
+        <h1>Notas de Macroeconomía II</h1>
+    </header>
+
+    <p class="intro">Bienvenido al repositorio de contenidos interactivos. Aquí encontrarás notas teóricas con simuladores dinámicos para explorar los modelos vistos en clase.</p>
+
+    <main>
+        <ul class="note-list">
+            <li class="note-item">
+                <a href="nota1_modelo_wsps_nuevo_concenso.html" class="note-link">
+                    <span class="note-title">1. Instituciones de Oferta y Mercado Laboral</span>
+                    <span class="note-tag">Modelo WS-PS</span>
+                </a>
+            </li>
+
+            </ul>
+    </main>
+
+    <footer>
+        Caleb Tejero · Auxiliar Docente · FCE - Universidad de Buenos Aires · 2026
+    </footer>
+</body>
+</html>
